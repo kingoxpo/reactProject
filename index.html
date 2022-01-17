@@ -16,16 +16,82 @@
     const root = document.querySelector("#root");
 
     const App = () => {
-      const [count, setCount] = React.useState("1");
-      const onClick = () => {
-        setCount(count + 1);
+      const [minutes, setMinutes] = React.useState();
+      const [flipped, setFlipped] = React.useState(false);
+      const onChange = event => {
+        setMinutes(event.target.value);
       };
-      console.log(count);
-      console.log(setCount);
+      const resetMinutes = () => setMinutes("");
+      const flip = () => {
+        resetMinutes();
+        setFlipped(current => !current);
+      };
+
+      const [m2, setM2] = React.useState();
+      const [switched, setSwitched] = React.useState(false);
+      const changeM2 = event => {
+        setM2(event.target.value);
+      };
+      const resetM2 = () => setM2("");
+      const switching = () => {
+        resetM2();
+        setSwitched(current => !current);
+      };
       return (
         <div>
-          <h3>Total Clicks Cnt : {count}</h3>
-          <button onClick={onClick}>Click this</button>
+          <h1>Powerful Converter</h1>
+          <div>
+            <label htmlFor="minutes">분: </label>
+            <input
+              value={flipped ? minutes * 60 : minutes}
+              id="minutes"
+              placeholder="Minutes"
+              type="number"
+              onChange={onChange}
+              disabled={flipped}
+            />
+          </div>
+          <div>
+            <label htmlFor="hours">시간: </label>
+            <input
+              value={flipped ? minutes : (minutes / 60).toFixed(2)}
+              id="hours"
+              placeholder="Hours"
+              type="number"
+              disabled={!flipped}
+              onChange={onChange}
+            />
+          </div>
+          <button onClick={resetMinutes}>Reset</button>
+          <button onClick={flip}>Flip</button>
+
+          <br></br>
+          <br></br>
+
+          <div>
+            <label htmlFor="m2">제곱미터: </label>
+            <input
+              value={switched ? (m2 * 3.305785).toFixed(4) : m2}
+              id="m2"
+              placeholder="제곱미터(m2)"
+              type="number"
+              onChange={changeM2}
+              disabled={switched}
+            />
+          </div>
+          <div>
+            <label htmlFor="acreage">평수: </label>
+            <input
+              value={switched ? m2 : (m2 * 0.3025).toFixed(4)}
+              id="acreage"
+              placeholder="평수"
+              type="number"
+              disabled={!switched}
+              onChange={changeM2}
+            />
+          </div>
+          <button onClick={resetM2}>Reset</button>
+          <button onClick={switching}>Switch</button>
         </div>
       );
     };
