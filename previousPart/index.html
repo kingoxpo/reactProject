@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+  <body>
+    <div id="root"></div>
+  </body>
+  <script
+    crossorigin
+    src="https://unpkg.com/react@17/umd/react.production.min.js"
+  ></script>
+  <script
+    crossorigin
+    src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js"
+  ></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script type="text/babel">
+    const root = document.querySelector("#root");
+    function MinutesToHours() {
+      const [amount, setAmount] = React.useState();
+      const [inverted, setInverted] = React.useState(false);
+      const onChange = event => {
+        setAmount(event.target.value);
+      };
+      const resetAmount = () => setAmount("");
+      const onInvert = () => {
+        resetAmount();
+        setInverted(current => !current);
+      };
+      return (
+        <div>
+          <div>
+            <input
+              style={{ textAlign: "right" }}
+              value={inverted ? amount * 60 : amount}
+              id="minutes"
+              placeholder="Minutes"
+              type="number"
+              onChange={onChange}
+              disabled={inverted}
+            />
+            <label htmlFor="minutes">분</label>
+          </div>
+          <div>
+            <input
+              style={{ textAlign: "right" }}
+              value={inverted ? amount : (amount / 60).toFixed(2)}
+              id="hours"
+              placeholder="Hours"
+              type="number"
+              disabled={!inverted}
+              onChange={onChange}
+            />
+            <label htmlFor="hours">시간</label>
+          </div>
+          <button onClick={resetAmount}>새로고침</button>
+          <button onClick={onInvert}>
+            {inverted ? "단위전환 분 > 시간" : "단위전환 시간 > 분"}
+          </button>
+        </div>
+      );
+    }
+    function M2ToAcreage() {
+      const [amount, setAmount] = React.useState();
+      const [inverted, setInverted] = React.useState(false);
+      const onChange = event => {
+        setAmount(event.target.value);
+      };
+      const resetAmount = () => setAmount("");
+      const onInvert = () => {
+        resetAmount();
+        setInverted(current => !current);
+      };
+      return (
+        <div>
+          <div>
+            <input
+              style={{ textAlign: "right" }}
+              value={inverted ? (amount * 3.305785).toFixed(4) : amount}
+              id="m2"
+              placeholder="제곱미터(m2)"
+              type="number"
+              onChange={onChange}
+              disabled={inverted}
+            />
+            <label htmlFor="m2">제곱미터(m2)</label>
+          </div>
+          <div>
+            <input
+              style={{ textAlign: "right" }}
+              value={inverted ? amount : (amount * 0.3025).toFixed(4)}
+              id="acreage"
+              placeholder="평수"
+              type="number"
+              disabled={!inverted}
+              onChange={onChange}
+            />
+            <label htmlFor="acreage">평</label>
+          </div>
+          <button onClick={resetAmount}>새로고침</button>
+          <button onClick={onInvert}>
+            {inverted ? "단위전환 제곱미터 > 평 " : "단위전환 평 > 제곱미터"}
+          </button>
+        </div>
+      );
+    }
+    function KRWToCNY() {
+      const [amount, setAmount] = React.useState();
+      const [inverted, setInverted] = React.useState(false);
+      const onChange = event => {
+        setAmount(event.target.value);
+      };
+      const resetAmount = () => setAmount("");
+      const onInvert = () => {
+        resetAmount();
+        setInverted(current => !current);
+      };
+      return (
+        <div>
+          <div>
+            <input
+              style={{ textAlign: "right" }}
+              value={inverted ? (amount * 0.0053).toFixed(2) : amount}
+              id="CNY"
+              placeholder="위안(YUAN)"
+              type="number"
+              onChange={onChange}
+              disabled={inverted}
+            />
+            <label htmlFor="CNY">위안</label>
+          </div>
+          <div>
+            <input
+              style={{ textAlign: "right" }}
+              value={inverted ? amount : (amount * 187.41).toFixed(2)}
+              id="KRW"
+              placeholder="원(WON)"
+              type="number"
+              disabled={!inverted}
+              onChange={onChange}
+            />
+            <label htmlFor="KRW">원</label>
+          </div>
+          <button onClick={resetAmount}>새로고침</button>
+          <button onClick={onInvert}>
+            {inverted ? "단위전환 위안 > 원화 " : "단위전환 원화 > 위안"}
+          </button>
+        </div>
+      );
+    }
+    function KRWToUSD() {
+      const [amount, setAmount] = React.useState();
+      const [inverted, setInverted] = React.useState(false);
+      const onChange = event => {
+        setAmount(event.target.value);
+      };
+      const resetAmount = () => setAmount("");
+      const onInvert = () => {
+        resetAmount();
+        setInverted(current => !current);
+      };
+      return (
+        <div>
+          <div>
+            <input
+              style={{ textAlign: "right" }}
+              value={inverted ? (amount * 0.0008403361345).toFixed(2) : amount}
+              id="USD"
+              placeholder="달러(Dollar)"
+              type="number"
+              onChange={onChange}
+              disabled={inverted}
+            />
+            <label htmlFor="USD">달러</label>
+          </div>
+          <div>
+            <input
+              style={{ textAlign: "right" }}
+              value={inverted ? amount : (amount * 1190.2).toFixed(2)}
+              id="KRW"
+              placeholder="원(WON)"
+              type="number"
+              disabled={!inverted}
+              onChange={onChange}
+            />
+            <label htmlFor="KRW">원</label>
+          </div>
+          <button onClick={resetAmount}>새로고침</button>
+          <button onClick={onInvert}>
+            {inverted ? "단위전환 달러 > 원화 " : "단위전환 원화 > 달러"}
+          </button>
+        </div>
+      );
+    }
+
+    function App() {
+      const [unitIndex, setUnitIndex] = React.useState("A000");
+      const onSelect = event => {
+        setUnitIndex(event.target.value);
+      };
+
+      const [currencyIndex, setCurrencyIndex] = React.useState("B000");
+      const onChoice = event => {
+        setCurrencyIndex(event.target.value);
+      };
+      return (
+        <div>
+          <div>
+            <h1 style={{ color: "indigo" }}>Sudo Converter</h1>
+            <select value={unitIndex} onChange={onSelect}>
+              <option value="A000">선택하세요</option>
+              <option value="A001">분 & 시간</option>
+              <option value="A002">제곱미터(m2) & 평</option>
+            </select>
+
+            <hr />
+            {unitIndex === "A000" ? (
+              <h2 style={{ color: "rebeccapurple" }}>변환할 식을 선택하세요</h2>
+            ) : null}
+            {unitIndex === "A001" ? <MinutesToHours /> : null}
+            {unitIndex === "A002" ? <M2ToAcreage /> : null}
+          </div>
+          <br></br>
+          <br></br>
+          <div>
+            <select value={currencyIndex} onChange={onChoice}>
+              <option value="B000">선택하세요</option>
+              <option value="B001">위안 & 원화</option>
+              <option value="B002">달러 & 원화</option>
+            </select>
+
+            <hr />
+            {currencyIndex === "B000" ? (
+              <h2 style={{ color: "rebeccapurple" }}>환율 통화를 선택하세요</h2>
+            ) : null}
+            {currencyIndex === "B001" ? <KRWToCNY /> : null}
+            {currencyIndex === "B002" ? <KRWToUSD /> : null}
+          </div>
+        </div>
+      );
+    }
+    ReactDOM.render(<App />, root);
+  </script>
+</html>
