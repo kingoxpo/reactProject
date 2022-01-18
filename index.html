@@ -14,87 +14,166 @@
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
   <script type="text/babel">
     const root = document.querySelector("#root");
-
-    const App = () => {
-      const [minutes, setMinutes] = React.useState();
-      const [flipped, setFlipped] = React.useState(false);
+    function MinutesToHours() {
+      const [amount, setAmount] = React.useState();
+      const [inverted, setInverted] = React.useState(false);
       const onChange = event => {
-        setMinutes(event.target.value);
+        setAmount(event.target.value);
       };
-      const resetMinutes = () => setMinutes("");
-      const flip = () => {
-        resetMinutes();
-        setFlipped(current => !current);
-      };
-
-      const [m2, setM2] = React.useState();
-      const [switched, setSwitched] = React.useState(false);
-      const changeM2 = event => {
-        setM2(event.target.value);
-      };
-      const resetM2 = () => setM2("");
-      const switching = () => {
-        resetM2();
-        setSwitched(current => !current);
+      const resetAmount = () => setAmount("");
+      const onInvert = () => {
+        resetAmount();
+        setInverted(current => !current);
       };
       return (
         <div>
-          <h1>Powerful Converter</h1>
           <div>
-            <label htmlFor="minutes">분: </label>
             <input
-              value={flipped ? minutes * 60 : minutes}
+              style={{ textAlign: "right" }}
+              value={inverted ? amount * 60 : amount}
               id="minutes"
               placeholder="Minutes"
               type="number"
               onChange={onChange}
-              disabled={flipped}
+              disabled={inverted}
             />
+            <label htmlFor="minutes">분</label>
           </div>
           <div>
-            <label htmlFor="hours">시간: </label>
             <input
-              value={flipped ? minutes : (minutes / 60).toFixed(2)}
+              style={{ textAlign: "right" }}
+              value={inverted ? amount : (amount / 60).toFixed(2)}
               id="hours"
               placeholder="Hours"
               type="number"
-              disabled={!flipped}
+              disabled={!inverted}
               onChange={onChange}
             />
+            <label htmlFor="hours">시간</label>
           </div>
-          <button onClick={resetMinutes}>Reset</button>
-          <button onClick={flip}>Flip</button>
-
-          <br></br>
-          <br></br>
-
+          <button onClick={resetAmount}>새로고침</button>
+          <button onClick={onInvert}>
+            {inverted ? "단위전환 분 > 시간" : "단위전환 시간 > 분"}
+          </button>
+        </div>
+      );
+    }
+    function M2ToAcreage() {
+      const [amount, setAmount] = React.useState();
+      const [inverted, setInverted] = React.useState(false);
+      const onChange = event => {
+        setAmount(event.target.value);
+      };
+      const resetAmount = () => setAmount("");
+      const onInvert = () => {
+        resetAmount();
+        setInverted(current => !current);
+      };
+      return (
+        <div>
           <div>
-            <label htmlFor="m2">제곱미터: </label>
             <input
-              value={switched ? (m2 * 3.305785).toFixed(4) : m2}
+              style={{ textAlign: "right" }}
+              value={inverted ? (amount * 3.305785).toFixed(4) : amount}
               id="m2"
               placeholder="제곱미터(m2)"
               type="number"
-              onChange={changeM2}
-              disabled={switched}
+              onChange={onChange}
+              disabled={inverted}
             />
+            <label htmlFor="m2">제곱미터(m2)</label>
           </div>
           <div>
-            <label htmlFor="acreage">평수: </label>
             <input
-              value={switched ? m2 : (m2 * 0.3025).toFixed(4)}
+              style={{ textAlign: "right" }}
+              value={inverted ? amount : (amount * 0.3025).toFixed(4)}
               id="acreage"
               placeholder="평수"
               type="number"
-              disabled={!switched}
-              onChange={changeM2}
+              disabled={!inverted}
+              onChange={onChange}
             />
+            <label htmlFor="acreage">평</label>
           </div>
-          <button onClick={resetM2}>Reset</button>
-          <button onClick={switching}>Switch</button>
+          <button onClick={resetAmount}>새로고침</button>
+          <button onClick={onInvert}>
+            {inverted ? "단위전환 제곱미터 > 평 " : "단위전환 평 > 제곱미터"}
+          </button>
         </div>
       );
-    };
+    }
+    function KRWToCNY() {
+      const [amount, setAmount] = React.useState();
+      const [inverted, setInverted] = React.useState(false);
+      const onChange = event => {
+        setAmount(event.target.value);
+      };
+      const resetAmount = () => setAmount("");
+      const onInvert = () => {
+        resetAmount();
+        setInverted(current => !current);
+      };
+      return (
+        <div>
+          <div>
+            <input
+              style={{ textAlign: "right" }}
+              value={inverted ? (amount * 0.0053).toFixed(2) : amount}
+              id="CNY"
+              placeholder="위안(YUAN)"
+              type="number"
+              onChange={onChange}
+              disabled={inverted}
+            />
+            <label htmlFor="CNY">위안</label>
+          </div>
+          <div>
+            <input
+              style={{ textAlign: "right" }}
+              value={inverted ? amount : (amount * 187.41).toFixed(2)}
+              id="KRW"
+              placeholder="원(WON)"
+              type="number"
+              disabled={!inverted}
+              onChange={onChange}
+            />
+            <label htmlFor="KRW">원</label>
+          </div>
+          <button onClick={resetAmount}>새로고침</button>
+          <button onClick={onInvert}>
+            {inverted ? "단위전환 위안 > 원화 " : "단위전환 원화 > 위안"}
+          </button>
+        </div>
+      );
+    }
+
+    function App() {
+      const [index, setIndex] = React.useState("0");
+      const onSelect = event => {
+        setIndex(event.target.value);
+      };
+      return (
+        <div>
+          <h1 style={{ color: "indigo" }}>Play Converter</h1>
+          <select value={index} onChange={onSelect}>
+            <option value="0">선택하세요</option>
+            <option value="1">분 & 시간</option>
+            <option value="2">제곱미터(m2) & 평</option>
+            <option value="3">위안(CNY) & 원화(KRW)</option>
+          </select>
+
+          <hr />
+          {index === "0" ? (
+            <h2 style={{ color: "rebeccapurple" }}>
+              상단의 선택박스에서 변환할 식을 선택하세요
+            </h2>
+          ) : null}
+          {index === "1" ? <MinutesToHours /> : null}
+          {index === "2" ? <M2ToAcreage /> : null}
+          {index === "3" ? <KRWToCNY /> : null}
+        </div>
+      );
+    }
     ReactDOM.render(<App />, root);
   </script>
 </html>
