@@ -14,29 +14,29 @@
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
   <script type="text/babel">
     const root = document.querySelector("#root");
-    const SaveBtn = () => {
+
+    const Btn = ({ title }) => {
       return (
         <button
           style={{
-            backgroundColor: "royalblue",
+            backgroundColor: "crimson",
             color: "white",
             padding: "10px 20px",
             border: 0,
+            margin: 5,
             borderRadius: 10,
           }}
         >
-          Save Change
+          {title}
         </button>
       );
     };
-    const ConfirmBtn = () => {
-      return <button>Confirm</button>;
-    };
+
     function App() {
       return (
         <div>
-          <SaveBtn />
-          <ConfirmBtn />
+          <Btn onClick={changeValue} title="Save Changes" />
+          <Btn title="Continue" />
         </div>
       );
     }
