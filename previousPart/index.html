@@ -104,15 +104,15 @@
     }
     function KRWToCNY() {
       const [amount, setAmount] = React.useState();
-      const [inverted, setInverted] = React.useState(false);
       const onChange = event => {
         setAmount(event.target.value);
       };
-      const resetAmount = () => setAmount("");
+      const [inverted, setInverted] = React.useState(false);
       const onInvert = () => {
         resetAmount();
         setInverted(current => !current);
       };
+      const resetAmount = () => setAmount("");
       return (
         <div>
           <div>
@@ -125,7 +125,7 @@
               onChange={onChange}
               disabled={inverted}
             />
-            <label htmlFor="CNY">위안</label>
+            <label htmlFor="CNY">위안(¥)</label>
           </div>
           <div>
             <input
@@ -137,7 +137,7 @@
               disabled={!inverted}
               onChange={onChange}
             />
-            <label htmlFor="KRW">원</label>
+            <label htmlFor="KRW">원(₩)</label>
           </div>
           <button onClick={resetAmount}>새로고침</button>
           <button onClick={onInvert}>
@@ -169,7 +169,7 @@
               onChange={onChange}
               disabled={inverted}
             />
-            <label htmlFor="USD">달러</label>
+            <label htmlFor="USD">달러($)</label>
           </div>
           <div>
             <input
@@ -181,7 +181,7 @@
               disabled={!inverted}
               onChange={onChange}
             />
-            <label htmlFor="KRW">원</label>
+            <label htmlFor="KRW">원(₩)</label>
           </div>
           <button onClick={resetAmount}>새로고침</button>
           <button onClick={onInvert}>
@@ -190,7 +190,96 @@
         </div>
       );
     }
-
+    function KRWToEUR() {
+      const [amount, setAmount] = React.useState();
+      const [inverted, setInverted] = React.useState(false);
+      const onChange = event => {
+        setAmount(event.target.value);
+      };
+      const resetAmount = () => setAmount("");
+      const onInvert = () => {
+        resetAmount();
+        setInverted(current => !current);
+      };
+      return (
+        <div>
+          <div>
+            <input
+              style={{ textAlign: "right" }}
+              value={inverted ? (amount * 0.0007415976981).toFixed(2) : amount}
+              id="EUR"
+              placeholder="유로(EURO)"
+              type="number"
+              onChange={onChange}
+              disabled={inverted}
+            />
+            <label htmlFor="EUR">유로(€)</label>
+          </div>
+          <div>
+            <input
+              style={{ textAlign: "right" }}
+              value={inverted ? amount : (amount * 1348.44).toFixed(2)}
+              id="KRW"
+              placeholder="원(WON)"
+              type="number"
+              disabled={!inverted}
+              onChange={onChange}
+            />
+            <label htmlFor="KRW">원(₩)</label>
+          </div>
+          <button onClick={resetAmount}>새로고침</button>
+          <button onClick={onInvert}>
+            {inverted ? "단위전환 유로 > 원화 " : "단위전환 원화 > 유로"}
+          </button>
+        </div>
+      );
+    }
+    function KRWToGBP() {
+      const [amount, setAmount] = React.useState();
+      const [inverted, setInverted] = React.useState(false);
+      const onChange = event => {
+        setAmount(event.target.value);
+      };
+      const resetAmount = () => setAmount("");
+      const onInvert = () => {
+        resetAmount();
+        setInverted(current => !current);
+      };
+      return (
+        <div>
+          <div>
+            <input
+              style={{ textAlign: "right" }}
+              value={
+                inverted ? (amount * 0.0006176843015535).toFixed(2) : amount
+              }
+              id="GBP"
+              placeholder="파운드(Pound)"
+              type="number"
+              onChange={onChange}
+              disabled={inverted}
+            />
+            <label htmlFor="GBP">파운드(£)</label>
+          </div>
+          <div>
+            <input
+              style={{ textAlign: "right" }}
+              value={inverted ? amount : (amount * 1618.95).toFixed(2)}
+              id="KRW"
+              placeholder="원(WON)"
+              type="number"
+              disabled={!inverted}
+              onChange={onChange}
+            />
+            <label htmlFor="KRW">원(₩)</label>
+          </div>
+          <button onClick={resetAmount}>새로고침</button>
+          <button onClick={onInvert}>
+            {inverted ? "단위전환 파운드 > 원화 " : "단위전환 원화 > 파운드"}
+          </button>
+        </div>
+      );
+    }
     function App() {
       const [unitIndex, setUnitIndex] = React.useState("A000");
       const onSelect = event => {
@@ -205,7 +294,18 @@
         <div>
           <div>
             <h1 style={{ color: "indigo" }}>Sudo Converter</h1>
-            <select value={unitIndex} onChange={onSelect}>
+            <select
+              style={{
+                color: "white",
+                backgroundColor: "slateblue",
+                padding: "10px 20px",
+                border: 0,
+                margin: 5,
+                borderRadius: 10,
+              }}
+              value={unitIndex}
+              onChange={onSelect}
+            >
               <option value="A000">선택하세요</option>
               <option value="A001">분 & 시간</option>
               <option value="A002">제곱미터(m2) & 평</option>
@@ -221,10 +321,23 @@
           <br></br>
           <br></br>
           <div>
-            <select value={currencyIndex} onChange={onChoice}>
+            <select
+              style={{
+                color: "white",
+                backgroundColor: "dodgerblue",
+                padding: "10px 20px",
+                border: 0,
+                margin: 5,
+                borderRadius: 10,
+              }}
+              value={currencyIndex}
+              onChange={onChoice}
+            >
               <option value="B000">선택하세요</option>
               <option value="B001">위안 & 원화</option>
               <option value="B002">달러 & 원화</option>
+              <option value="B003">유로 & 원화</option>
+              <option value="B004">파운드 & 원화</option>
             </select>
 
             <hr />
@@ -233,6 +346,8 @@
             ) : null}
             {currencyIndex === "B001" ? <KRWToCNY /> : null}
             {currencyIndex === "B002" ? <KRWToUSD /> : null}
+            {currencyIndex === "B003" ? <KRWToEUR /> : null}
+            {currencyIndex === "B004" ? <KRWToGBP /> : null}
           </div>
         </div>
       );

@@ -15,9 +15,10 @@
   <script type="text/babel">
     const root = document.querySelector("#root");
 
-    const Btn = ({ title }) => {
+    const Btn = ({ title, changeValue }) => {
       return (
         <button
+          onClick={changeValue}
           style={{
             backgroundColor: "crimson",
             color: "white",
@@ -33,9 +34,13 @@
     };
 
     function App() {
+      const [value, setValue] = React.useState("Save Changes");
+      const changeValue = () => {
+        setValue("Revert Changes");
+      };
       return (
         <div>
-          <Btn onClick={changeValue} title="Save Changes" />
+          <Btn title={value} changeValue={changeValue} />
           <Btn title="Continue" />
         </div>
       );
